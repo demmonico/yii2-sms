@@ -1,0 +1,20 @@
+{
+    "name": "demmonico/yii2-sms",
+    "type": "yii2-extension",
+    "description": "Yii2 component which allow send sms using multiply providers. Now available Nexmo provider",
+    "keywords": ["yii", "yii2", "send", "sms", "nexmo"],
+    "homepage": "https://github.com/demmonico/yii2-sms",
+    "license": "MIT",
+    "authors": [
+        {"name": "Dmitry demmonico", "email": "demmonico@gmail.com"}
+    ],
+    "require": {
+        "php": ">5.5.0",
+        "yiisoft/yii2": "~2.0.0"
+    },
+    "autoload": {
+        "psr-4": {
+            "demmonico\\sms\\": "src"
+        }
+    }
+}
