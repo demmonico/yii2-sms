@@ -42,6 +42,44 @@ $component = \Yii::createObject('demmonico\sms\Nexmo', [
 ]);
 ```
 
+or using config component's bootstrap method (see [https://github.com/demmonico/yii2-config](https://github.com/demmonico/yii2-config))
+
+in config file
+```php
+return [
+    //...
+    'components' => [
+        //...
+        'sms' => [
+            'class' => 'demmonico\sms\Sender',
+            'senderNumber' => 'name' or 'number',
+            'provider' => [
+                'class' => 'demmonico\sms\Nexmo',
+                'apiKey' => [
+                    'component' => 'config',
+                    'sms.Nexmo.apiKey',
+                ],
+                'apiSecret' => [
+                    'component' => 'config',
+                    'sms.Nexmo.apiSecret',
+                ],
+            ],
+        ],
+    ],
+];
+```
+
+and in local params file
+
+```php
+return [
+    //...
+    'sms.Nexmo.apiKey' => '******',
+    'sms.Nexmo.apiSecret' => '******',
+];
+```
+
+
 Now available Nexmo provider only. But you can add any external class with your custom provider. 
 New providers can be added by creating class, which will implements `demmonico\sms\SmsProviderInterface` and extends (optional) `demmonico\sms\BaseProvider`.
 

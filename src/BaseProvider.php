@@ -9,8 +9,16 @@ namespace demmonico\sms;
 use yii\base\Configurable;
 
 
-class BaseProvider implements Configurable
+/**
+ * Class BaseProvider is parent for any providers
+ * @author: dep
+ * @package demmonico\sms
+ */
+abstract class BaseProvider implements Configurable
 {
+    use ConfigurableTrait;
+
+
     const LOG_LEVEL_ALL     = 'all';
     const LOG_LEVEL_ERROR   = 'error';
 
@@ -53,10 +61,7 @@ class BaseProvider implements Configurable
     final public function __construct($config = [])
     {
         // apply configurable
-        if (is_array($config)) foreach ($config as $k=>$v){
-            if (property_exists(get_called_class(), $k))
-                $this->$k = $v;
-        }
+        $this->applyConfigs($config);
 
         // set logCategory
         if (is_null($this->logCategory))

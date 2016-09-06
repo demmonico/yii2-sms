@@ -7,6 +7,11 @@
 namespace demmonico\sms;
 
 
+/**
+ * Class Nexmo works with Nexmo API ( @see https://docs.nexmo.com/ )
+ * @author: dep
+ * @package demmonico\sms
+ */
 class Nexmo extends BaseProvider implements SmsProviderInterface
 {
     /**

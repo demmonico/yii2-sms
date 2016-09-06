@@ -16,11 +16,11 @@ use yii\base\Configurable;
  *
  * @use
  * Send sms
- * Yii::$app->sms->sendSms('Hello, world!', 'number') or Yii::$app->sms->sendSms('Hello, world!', 'recipientNumber', 'senderNumber')
+ *      Yii::$app->sms->sendSms('Hello, world!', 'number') or Yii::$app->sms->sendSms('Hello, world!', 'recipientNumber', 'senderNumber')
  * Get account balance
- * Yii::$app->sms->getBalance()
+ *      Yii::$app->sms->getBalance()
  * Get account numbers
- * Yii::$app->sms->getNumbers()
+ *      Yii::$app->sms->getNumbers()
  *
  * Config file
  * 'componentName' => [
@@ -32,6 +32,24 @@ use yii\base\Configurable;
  *      ],
  *      'senderNumber' => 'name' or 'number',
  * ],
+ * or implementing config component's bootstrap method ( @see https://github.com/demmonico/yii2-config )
+ *      in config file
+ *      'provider' => [
+ *          'class' => 'demmonico\sms\Nexmo',
+ *          'apiKey' => [
+ *              'component' => 'config',
+ *              'sms.Nexmo.apiKey',
+ *          ],
+ *          'apiSecret' => [
+ *              'component' => 'config',
+ *              'sms.Nexmo.apiSecret',
+ *          ],
+ *      ],
+ *      and in local params
+ *      [
+ *          'sms.Nexmo.apiKey' => '******',
+ *          'sms.Nexmo.apiSecret' => '******',
+ *      ]
  *
  * Debug options
  *      'debug' => [
@@ -43,6 +61,9 @@ use yii\base\Configurable;
  */
 class Sender implements Configurable
 {
+    use ConfigurableTrait;
+
+
     /**
      * Sender's number
      * @var string
@@ -78,12 +99,7 @@ class Sender implements Configurable
 
     final public function __construct($config = [])
     {
-        // apply configurable
-        if (is_array($config)) foreach ($config as $k=>$v){
-            if (property_exists(get_class(), $k))
-                $this->$k = $v;
-        }
-
+        $this->applyConfigs($config);   // apply configurable
         static::init();
     }
 
